@@ -3,8 +3,10 @@ version: '3.3'
 services:
  api-server:
   restart: always
-  build: .
+  #build: .
   image: api-image:1.0
   container_name: api-server
-  ports: 
-   - 443:443
+  ports:
+   - 4242:4242
+  tty: true
+ 

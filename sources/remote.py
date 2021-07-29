@@ -14,7 +14,7 @@ import argparse
 # IMPORT CONFIG
 
 config = configparser.ConfigParser()
-config.read('config')
+config.read('/sources/config')
 
 
 class jenkinsConf():
@@ -105,7 +105,7 @@ def create_blank_job(projectName):
     
 
 def xml_generator(projectName):
-	tree = ET.parse('xml_config')
+	tree = ET.parse('/sources/xml_config')
 	root = tree.getroot()
 	for i in root.iter('credentialsId'):
 		i.text = ('apidentification')
@@ -165,6 +165,7 @@ def control_remote():
 	parser.add_argument('--delete-gitlab', dest='delete_gitlab', action='store_true', help='delete Gitlab project')
 	parser.add_argument('--delete-jenkins', dest='delete_jenkins', action='store_true', help='delete Jenkins project')
 	parser.add_argument('-b, --build-job', dest='build_job', action='store_true', help='build Jenkins job')
+	parser.add_argument('--blank-project', dest='blank_project', action='store_true', help='create Jenkins blank project')
 	
 	parser.add_argument('branchName',type=str, help='the name of the project')
 	
@@ -183,6 +184,8 @@ def control_remote():
 		delete_jenkins_project(args.projectName)
 	if args.build_job==True:
 		run_jenkins_build(args.projectName,args.branchName)
+	if args.blank_project==True:	
+		create_blank_job(args.projectName)
 
 
 control_remote()
